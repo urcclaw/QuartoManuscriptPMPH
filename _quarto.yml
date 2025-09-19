@@ -1,0 +1,28 @@
+project:
+  type: manuscript
+
+manuscript:
+  article: index.qmd
+
+format:
+  html:
+    comments:
+      hypothesis: true
+  docx: 
+    toc: false
+    toc-depth: 2
+    reference-doc: custom-reference-doc.docx
+    bibliography: references.bib
+    csl: health-and-preventive-medicine.csl
+    execute:
+        cache: false
+  jats: default
+
+  # (other formats)
+  pdf: default
+
+execute:
+  freeze: true
+
+editor: visual
+

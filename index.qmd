@@ -1,0 +1,176 @@
+---
+add---
+title: "Authors-block Example"
+
+authors:
+  - name: John Doe
+    affiliations:
+      - ref: jdct
+    corresponding: true
+    email: john.doe@jdct.edu
+    orcid: 0000-1111-2222-3333
+    equal-contributor: true
+  - name: John Roe
+    affiliations:
+      - ref: jdct
+    orcid: 0000-3333-2222-1111
+  - name: Jane Roe
+    affiliations:
+      - ref: jdct
+      - ref: iot
+    orcid: 0000-2222-1111-3333
+    equal-contributor: true
+
+affiliations:
+  - id: jdct
+    name: John Doe Center for Technology, John Doe University, Doetown, Germany.
+  - id: iot
+    name: Institute of Technology, John Doe University, Doetown, Germany.
+
+filters:
+  - authors-block
+bibliography: references.bib
+---
+
+```{r}
+#| label: load-pkgs
+#| include: false
+
+# Ensures the package "pacman" is installed
+if (!require("pacman")) install.packages("pacman")
+
+# Packages available from CRAN
+##############################
+pacman::p_load(
+  rio,          # File import
+  here,         # File locator
+  tidyverse,    # data management + ggplot2 graphics, 
+  stringr,      # manipulate text strings 
+  purrr,        # loop over objects in a tidy way
+  gtsummary,    # summary statistics and tests 
+  broom,        # tidy up results from regressions
+  lmtest,       # likelihood-ratio tests
+  parameters,  # alternative to tidy up results from regressions
+  skimr,        # get overview of data
+  rstatix,      # summary statistics and statistical tests
+  janitor,      # adding totals and percents to tables
+  scales,       # easily convert proportions to percents
+  corrr,        # correlation analayis for numeric variables
+  lubridate,    # working with dates
+  epikit,       # age_categories() function
+  apyramid,     # age pyramids
+  RColorBrewer, # color palettes
+  formattable,  # fancy tables
+  kableExtra,    # table formatting
+  survival,     # survival analysis
+  survminer,    # plotting survival curves
+  flextable     # converting tables to pretty images
+  )
+
+# Import data
+linelist <- import(here("./data/raw/linelist_cleaned.xlsx"))
+#View(linelist) # view data
+
+```
+
+# ABSTRACT
+
+**Objectives:** Preliminary research suggests that rectally administered nonsteroidal antiinflammatory drugs may reduce the incidence of pancreatitis after endoscopic retrograde cholangiopancreatography (ERCP).
+
+**Methods:** In this multicenter, randomized, placebo-controlled, double-blind clinical trial, we assigned patients at elevated risk for post-ERCP pancreatitis to receive a single dose of rectal indomethacin or placebo immediately after ERCP. Patients were determined to be at high risk on the basis of validated patient- and procedure-related risk factors. The primary outcome was post-ERCP pancreatitis, which was defined as new upper abdominal pain, an elevation in pancreatic enzymes to at least three times the upper limit of the normal range 24 hours after the procedure, and hospitalization for at least 2 nights.
+
+**Results:** A total of 602 patients were enrolled and completed follow-up. The majority of patients (82%) had a clinical suspicion of sphincter of Oddi dysfunction. Post-ERCP pancreatitis developed in 27 of 295 patients (9.2%) in the indomethacin group and in 52 of 307 patients (16.9%) in the placebo group (P=0.005). Moderate-to-severe pancreatitis developed in 13 patients (4.4%) in the indomethacin group and in 27 patients (8.8%) in the placebo group (P=0.03).
+
+**Conclusions:** Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.)
+
+**Keywords:** Hyperthermia, Radiation Therapy, Non-Small Cell Lung Cancer
+
+# INTRODUCTION
+
+{{< lipsum 2 >}}
+
+# METHODS
+
+## Study Design and Setting
+
+{{< lipsum 1 >}}
+
+## Data Collection
+
+{{< lipsum 1 >}}
+
+## Statistical Analysis
+
+{{< lipsum 1 >}}
+
+## Ethics Statement
+
+This study was approved by the Human Subjects Committee.
+
+# RESULTS
+
+Baseline characteristics were similar in the two study groups (@tbl-characteristics-baseline). Notably, of patients had a clinical suspicion of sphincter of Oddi dysfunction.
+
+```{r}
+#| label: tbl-characteristics-baseline
+#| tbl-cap: Characteristics of the Patients at Baseline.
+
+# theme based on https://github.com/idea-labs/comsldpsy
+apa_theme <- function (ft)  {
+  ft %>% 
+    flextable::font(fontname = "Times New Roman", part = "all") %>% 
+    flextable::fontsize(size = 11, part = "all")
+
+}
+
+linelist |> 
+     select(age_years, gender, outcome, fever, temp, hospital) |>  # keep only the columns of interest
+     tbl_summary() |>
+     as_flex_table() |>
+     apa_theme()
+
+
+```
+
+## Heterogeneity in Treatment Effects
+
+The relative benefit of indomethacin did not vary significantly according to patients' pretreatment risk score, although the absolute risk reduction varied from an NNT of 21 for those with a risk score of 1 (one major or two minor inclusion criteria) to an NNT of 6 for those with a risk score of 5 (e.g., four major and two minor inclusion criteria) (@fig-heterogeneity).
+
+![Analysis of the Heterogeneity in Treatment Effects.](images/clipboard-2828008318.png){#fig-heterogeneity}
+
+## Exploratory Subgroup Analyses
+
+The beneficial effect of indomethacin on the primary outcome was also consistent across the other prespecified and post hoc secondary subgroups (@fig-exploratory-subgroup). In particular, indomethacin appeared to be protective regardless of whether patients had undergone pancreatic stenting or had a clinical suspicion of sphincter of Oddi dysfunction; indomethacin was also protective in all three subtypes of sphincter of Oddi dysfunction and in the two study sites enrolling the largest number of patients.
+
+![Exploratory Subgroup Analyses](images/clipboard-1822931444.png){#fig-exploratory-subgroup}
+
+# DISCUSSION
+
+the risk of contracting the virus [@assessment2020; @bailey2025] and [@aechehng2015] {{< lipsum 2 >}}
+
+# Supplemental Materials
+
+# Notes
+
+: **Conflict of Interest**
+
+The authors have no conflicts of interest associated with the material presented in this paper.
+
+: **Funding**
+
+None.
+
+: **Acknowledgements**
+
+None.
+
+: **Author Contributions**
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+# Appendix {.appendix}
+
+{{< lipsum 1 >}}
