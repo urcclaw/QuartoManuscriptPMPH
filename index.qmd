@@ -156,15 +156,15 @@ the risk of contracting the virus [@assessment2020; @bailey2025] and [@aechehng2
 
 The authors have no conflicts of interest associated with the material presented in this paper.
 
-: **Funding**
+:   **Funding**
 
 None.
 
-: **Acknowledgements**
+:   **Acknowledgements**
 
 None.
 
-: **Author Contributions**
+:   **Author Contributions**
 
 # References {.unnumbered}
 
