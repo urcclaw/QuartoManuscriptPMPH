@@ -1,0 +1,97 @@
+---
+title: Enrollment and Outcomes
+---
+
+Consort diagram.
+
+```{r}
+#| label: load-pkgs
+library(consort)
+```
+
+```{r}
+#| label: fig-enrollment-outcomes
+#| fig-cap: Enrollment and Outcomes.
+#| fig-width: 10
+#| fig-asp: 1
+#| fig-dpi: 300
+#| warning: false
+
+# Generate sample data for CONSORT diagram
+set.seed(123)  # For reproducibility
+N <- 799
+
+# Create initial population
+pop <- rep("Assessed for eligibility", N)
+
+# Create exclusions at screening
+exc1 <- rep(NA, N)
+n_excluded1 <- 197
+exc1[sample(1:N, n_excluded1)] <- sample(
+  c("Did not meet inclusion criteria", "Met exclusion criteria", "Did not undergo ERCP"), 
+  n_excluded1, replace = TRUE, prob = c(0.858, 0.0558, 0.086)
+)
+
+# Those eligible after first screening
+eligible1 <- ifelse(is.na(exc1), "Eligible after screening", NA)
+
+# Second exclusion
+exc2 <- rep(NA, N)
+eligible_indices <- which(!is.na(eligible1))
+if(length(eligible_indices) > 1) {
+  exc2[sample(eligible_indices, 1)] <- "Could not hold suppository"
+}
+
+# Those eligible for randomization
+eligible2 <- ifelse(is.na(exc1) & is.na(exc2), "Eligible for randomization", NA)
+
+# Randomization to treatment arms
+treatment <- rep(NA, N)
+randomized_indices <- which(!is.na(eligible2))
+treatment[randomized_indices] <- sample(c("Indomethacin", "Placebo"), 
+                                       length(randomized_indices), replace = TRUE)
+
+# Follow-up completion (simulate some dropouts)
+followup <- treatment
+n_completed <- length(which(!is.na(treatment)))
+n_dropout <- round(n_completed * 0.03)  # 3% dropout
+if(n_dropout > 0 & n_completed > n_dropout) {
+  dropout_indices <- sample(which(!is.na(treatment)), n_dropout)
+  followup[dropout_indices] <- NA
+}
+
+# Final analysis population
+analysis <- followup
+
+# Create the dataframe
+df_consort <- data.frame(
+  pop = pop,
+  exc1 = exc1,
+  eligible1 = eligible1,
+  exc2 = exc2, 
+  eligible2 = eligible2,
+  treatment = treatment,
+  followup = followup,
+  analysis = analysis
+)
+
+# Generate CONSORT plot
+consort_plot(
+  data = df_consort,
+  orders = c(pop = "Assessed for eligibility (n=799)",
+            exc1 = "Excluded",
+            eligible1 = "Eligible after initial screening", 
+            exc2 = "Excluded",
+            eligible2 = "Eligible for randomization",
+            treatment = "Randomized",
+            followup = "Completed study",
+            analysis = "Included in final analysis"),
+  side_box = c("exc1", "exc2"),
+  allocation = "treatment",
+  labels = c("1" = "Enrollment", 
+            "2" = "Allocation", 
+            "3" = "Follow-up", 
+            "4" = "Analysis"),
+  cex = 0.8
+)
+```

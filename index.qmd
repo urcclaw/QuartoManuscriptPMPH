@@ -43,7 +43,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(
   rio,          # File import
   here,         # File locator
-  tidyverse,    # data management + ggplot2 graphics, 
+  tidyverse,    # data management + ggplot2 graphics 
   stringr,      # manipulate text strings 
   purrr,        # loop over objects in a tidy way
   gtsummary,    # summary statistics and tests 
@@ -63,6 +63,8 @@ pacman::p_load(
   kableExtra,    # table formatting
   survival,     # survival analysis
   survminer,    # plotting survival curves
+  medicaldata,  # example datasets
+  consort,      # consort diagrams
   flextable     # converting tables to pretty images
   )
 
@@ -107,6 +109,12 @@ linelist <- import(here("./data/raw/linelist_cleaned.xlsx"))
 This study was approved by the Human Subjects Committee.
 
 # RESULTS
+
+## Patients
+
+From February 2009 through July 2011, the data and safety monitoring board performed an interim analysis to assess the outcomes of the first 600 patients and recommended that the study be terminated early on the basis of the benefit of indomethacin as compared with placebo. Thus, we terminated the study according to the a priori stopping rule.
+
+{{< embed notebooks/consort.qmd#fig-enrollment-outcomes >}}
 
 Baseline characteristics were similar in the two study groups (@tbl-characteristics-baseline). Notably, of patients had a clinical suspicion of sphincter of Oddi dysfunction.
 
