@@ -1,5 +1,4 @@
 ---
-add---
 title: "Authors-block Example"
 
 authors:
